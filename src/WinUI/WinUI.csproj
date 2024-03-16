@@ -56,7 +56,7 @@
   <!-- NuGet Icon -->
   <ItemGroup>
     <None Include="..\..\etc\Icon_128.png" Pack="true" PackagePath="" />
-    <None Include="..\..\etc\README_WinUI.md" Pack="true" Link="README_WinUI.md" />
+    <None Include="..\..\etc\README_WinUI.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <!-- Project references -->
