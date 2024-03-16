@@ -5,13 +5,15 @@
     <TargetFrameworks>net6.0-windows;net7.0-windows;net8.0-windows</TargetFrameworks>
     <AssemblyName>Sungaila.ImmersiveDarkMode</AssemblyName>
     <RootNamespace>Sungaila.ImmersiveDarkMode</RootNamespace>
+    <EmbedAllSources>true</EmbedAllSources>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Configurations>Debug;Release;ReleaseSigned</Configurations>
   </PropertyGroup>
 
   <!-- NuGet -->
   <PropertyGroup>
     <VersionPrefix>1.0.0</VersionPrefix>
-    <VersionSuffix>preview</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <Authors>David Sungaila</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
