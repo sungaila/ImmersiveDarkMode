@@ -56,9 +56,9 @@ jobs:
       - name: Restore
         run: dotnet restore ImmersiveDarkMode.sln
       - name: Build
-        run: dotnet build ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --property:VersionSuffix=ci --no-restore
+        run: dotnet build ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --property:VersionSuffix=ci
       - name: Pack
-        run: dotnet pack ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --property:VersionSuffix=ci --no-restore
+        run: dotnet pack ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --property:VersionSuffix=ci
       - name: Publish libraries
         uses: actions/upload-artifact@v4
         with:
