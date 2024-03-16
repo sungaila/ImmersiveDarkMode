@@ -29,6 +29,7 @@ namespace Sungaila.ImmersiveDarkMode.Wpf
 
             void closedHandler(object? sender, EventArgs e)
             {
+                window.SourceInitialized -= sourceInitializedHandler;
                 window.Closed -= closedHandler;
                 hwndSource?.Dispose();
             }
@@ -57,17 +58,9 @@ namespace Sungaila.ImmersiveDarkMode.Wpf
 
         private static nint WndProc(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled)
         {
-            try
+            if (msg == PInvoke.WM_SETTINGCHANGE && wParam == 0 && lParam != 0 && Marshal.PtrToStringUni(lParam) == "ImmersiveColorSet")
             {
-                if (msg == PInvoke.WM_SETTINGCHANGE && wParam == 0 && lParam != 0 && Marshal.PtrToStringUni(lParam) == "ImmersiveColorSet")
-                {
-                    NativeMethods.SetTitlebarTheme(hwnd);
-                    handled = true;
-                }
-            }
-            catch (Exception)
-            {
-                // ignore
+                NativeMethods.SetTitlebarTheme(hwnd);
             }
 
             return IntPtr.Zero;

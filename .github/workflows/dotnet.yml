@@ -69,6 +69,7 @@ jobs:
           name: Library assemblies
           path: |
             src/Core/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}
+            src/WinForms/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}
             src/WinUI/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}
             src/Wpf/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}
             !**/*.nupkg
@@ -81,6 +82,8 @@ jobs:
           path: |
             src/Core/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}/*.nupkg
             src/Core/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}/*.snupkg
+            src/WinForms/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}/*.nupkg
+            src/WinForms/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}/*.snupkg
             src/WinUI/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}/*.nupkg
             src/WinUI/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}/*.snupkg
             src/Wpf/bin/${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}/*.nupkg
