@@ -7,7 +7,7 @@ using Windows.Win32.Graphics.Dwm;
 
 namespace Sungaila.ImmersiveDarkMode
 {
-    [SupportedOSPlatform("windows10.0.22000.0")]
+    [SupportedOSPlatform("windows")]
     /// <summary>
     /// Provides methods for setting the titlebar theme in Windows.
     /// </summary>
@@ -29,6 +29,7 @@ namespace Sungaila.ImmersiveDarkMode
             return value != 0x00000000;
         }
 
+        [SupportedOSPlatform("windows10.0.22000.0")]
         /// <summary>
         /// Sets the titlebar theme according to the current system-wide application theme.
         /// </summary>
@@ -38,6 +39,7 @@ namespace Sungaila.ImmersiveDarkMode
             SetTitlebarTheme(hwnd, GetAppsUseLightTheme());
         }
 
+        [SupportedOSPlatform("windows10.0.22000.0")]
         /// <summary>
         /// Sets the titlebar theme.
         /// </summary>
@@ -54,6 +56,7 @@ namespace Sungaila.ImmersiveDarkMode
                 sizeof(int));
         }
 
+        [SupportedOSPlatform("windows10.0.22000.0")]
         internal unsafe static void DwmSetWindowAttribute(nint hwnd, DWMWINDOWATTRIBUTE attr, int attrValue, uint attrSize)
         {
             var handle = GCHandle.Alloc(attrValue, GCHandleType.Pinned);

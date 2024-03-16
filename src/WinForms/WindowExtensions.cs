@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
+using Windows.Win32;
 
 namespace Sungaila.ImmersiveDarkMode.WinForms
 {
@@ -8,41 +10,16 @@ namespace Sungaila.ImmersiveDarkMode.WinForms
     public static class WindowExtensions
     {
         /// <summary>
-        /// Set the titlebar theme whenever Windows system-wide application theme is changed.
+        /// Checks if the given message broadcasts a change to the system-wide application theme. Then applies the titlebar theme accordingly.
+        /// This method should be called within <see cref="Form.WndProc(ref Message)"/>;
         /// </summary>
-        /// <param name="window">The Windows Forms window for which the titlebar theme is set.</param>
-        public static void InitTitlebarTheme(this Form form)
+        /// <param name="m">The message to check.</param>
+        public static void CheckAppsThemeChanged(Message m)
         {
-            ArgumentNullException.ThrowIfNull(form);
+            if (m.Msg != PInvoke.WM_SETTINGCHANGE || m.WParam != IntPtr.Zero || m.LParam == IntPtr.Zero || Marshal.PtrToStringUni(m.LParam) != "ImmersiveColorSet")
+                return;
 
-            var filter = new ImmersiveColorSetMessageFilter(form.Handle);
-            Application.AddMessageFilter(filter);
-
-            void handleCreated(object? sender, EventArgs e)
-            {
-                form.HandleCreated -= handleCreated;
-                SetTitlebarTheme(form);
-            }
-
-            void formClosed(object? sender, FormClosedEventArgs e)
-            {
-                form.HandleCreated -= handleCreated;
-                form.FormClosed -= formClosed;
-                Application.RemoveMessageFilter(filter);
-            }
-
-            form.FormClosed -= formClosed;
-            form.FormClosed += formClosed;
-
-            if (!form.IsHandleCreated)
-            {
-                form.HandleCreated -= handleCreated;
-                form.HandleCreated += handleCreated;
-            }
-            else
-            {
-                handleCreated(null, EventArgs.Empty);
-            }
+            NativeMethods.SetTitlebarTheme(m.HWnd);
         }
 
         /// <summary>

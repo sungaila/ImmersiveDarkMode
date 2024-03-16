@@ -12,9 +12,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B9262BF6-66EE-41DC-8BC7-092DB7015C96}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		etc\README_WinForms.md = etc\README_WinForms.md
+		etc\README_WinUI.md = etc\README_WinUI.md
+		etc\README_Wpf.md = etc\README_Wpf.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinForms", "src\WinForms\WinForms.csproj", "{1819E691-4496-4C23-B992-3D263C6A0912}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinForms", "src\WinForms\WinForms.csproj", "{1819E691-4496-4C23-B992-3D263C6A0912}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,8 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using System;
 using System.Runtime.Versioning;
+using Windows.UI.ViewManagement;
 using WinRT.Interop;
 
 namespace Sungaila.ImmersiveDarkMode.WinUI
@@ -16,18 +18,16 @@ namespace Sungaila.ImmersiveDarkMode.WinUI
         {
             ArgumentNullException.ThrowIfNull(window);
 
-            if (window.Content is not FrameworkElement frameworkElement)
-                return;
+            void colorValuesChangedHandler(UISettings sender, object args) => SetTitlebarTheme(window);
 
-            void actualThemeChangedHandler(FrameworkElement sender, object args) => SetTitlebarTheme(window);
-
-            frameworkElement.ActualThemeChanged -= actualThemeChangedHandler;
-            frameworkElement.ActualThemeChanged += actualThemeChangedHandler;
+            var uiSettings = new UISettings();
+            uiSettings.ColorValuesChanged += colorValuesChangedHandler;
 
             void closedHandler(object sender, WindowEventArgs args)
             {
-                frameworkElement.ActualThemeChanged -= actualThemeChangedHandler;
                 window.Closed -= closedHandler;
+                uiSettings!.ColorValuesChanged -= colorValuesChangedHandler;
+                uiSettings = null;
             };
 
             window.Closed -= closedHandler;
@@ -44,7 +44,17 @@ namespace Sungaila.ImmersiveDarkMode.WinUI
         {
             ArgumentNullException.ThrowIfNull(window);
 
-            SetTitlebarTheme(window, Application.Current.RequestedTheme == ApplicationTheme.Light);
+            window.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+            {
+                if (window.Content is FrameworkElement frameworkElement && frameworkElement.RequestedTheme != ElementTheme.Default)
+                {
+                    SetTitlebarTheme(window, frameworkElement.RequestedTheme == ElementTheme.Light);
+                }
+                else
+                {
+                    SetTitlebarTheme(window, Application.Current.RequestedTheme == ApplicationTheme.Light);
+                }
+            });
         }
 
         /// <summary>
