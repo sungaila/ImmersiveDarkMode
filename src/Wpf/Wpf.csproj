@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Assembly -->
+  <PropertyGroup>
+    <TargetFrameworks>net6.0-windows10.0.22000.0;net7.0-windows10.0.22000.0;net8.0-windows10.0.22000.0</TargetFrameworks>
+    <AssemblyName>Sungaila.ImmersiveDarkMode.Wpf</AssemblyName>
+    <RootNamespace>Sungaila.ImmersiveDarkMode.Wpf</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <Configurations>Debug;Release;ReleaseSigned</Configurations>
+  </PropertyGroup>
+
+  <!-- NuGet -->
+  <PropertyGroup>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSuffix></VersionSuffix>
+    <Authors>David Sungaila</Authors>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>Icon_128.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/sungaila/ImmersiveDarkMode</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/sungaila/ImmersiveDarkMode/master/etc/Icon_128.png</PackageIconUrl>
+    <Description>Applies a dark theme to the titlebar of Win32 windows (for WPF). Can also be toggled automatically whenever the system-wide application theme changes.</Description>
+    <PackageReleaseNotes>- Initial release.</PackageReleaseNotes>
+    <PackageTags>Win32 dark theme theming DWM DWMWA_USE_IMMERSIVE_DARK_MODE WPF</PackageTags>
+    <RepositoryUrl>https://github.com/sungaila/ImmersiveDarkMode.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <!-- C# compiler -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Features>strict</Features>
+    <WarningsAsErrors>nullable</WarningsAsErrors>
+  </PropertyGroup>
+
+  <!-- Debug builds -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <VersionSuffix>debug</VersionSuffix>
+  </PropertyGroup>
+
+  <!-- Release builds -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release' or '$(Configuration)'=='ReleaseSigned'">
+    <SignAssembly>true</SignAssembly>
+    <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="NativeMethods.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="NativeMethods.txt" />
+  </ItemGroup>
+
+  <!-- NuGet Icon -->
+  <ItemGroup>
+    <None Include="..\..\etc\Icon_128.png" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <!-- Project references -->
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+  <!-- NuGet packages -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta" PrivateAssets="all" />
+  </ItemGroup>
+
+  <Import Project="..\PropertiesSigning.targets" />
+  <Import Project="..\CodeSigning.targets" />
+  <Import Project="..\PackageSigning.targets" />
+
+</Project>
