@@ -56,9 +56,9 @@ jobs:
       - name: Restore
         run: dotnet restore ImmersiveDarkMode.sln
       - name: Build
-        run: dotnet build ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --property:VersionSuffix=ci
+        run: dotnet build ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --property:VersionSuffix=ci --no-restore
       - name: Pack
-        run: dotnet pack ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --property:VersionSuffix=ci
+        run: dotnet pack ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --property:VersionSuffix=ci --no-restore
       - name: Publish libraries
         uses: actions/upload-artifact@v4
         with:
@@ -138,5 +138,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"sungaila_ImmersiveDarkMode" /o:"sungaila" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
           dotnet restore ImmersiveDarkMode.sln
-          dotnet build  ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }}
+          dotnet build  ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --no-restore
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
