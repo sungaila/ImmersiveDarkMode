@@ -14,8 +14,7 @@ namespace Sungaila.ImmersiveDarkMode.WinUI
         /// <param name="window">The WinUI window for which the titlebar theme is set.</param>
         public static void InitTitlebarTheme(this Window window)
         {
-            if (window == null)
-                throw new ArgumentNullException(nameof(window));
+            ArgumentNullException.ThrowIfNull(window);
 
             if (window.Content is not FrameworkElement frameworkElement)
                 return;
@@ -43,8 +42,7 @@ namespace Sungaila.ImmersiveDarkMode.WinUI
         /// <param name="window">The WinUI window for which the titlebar theme is set.</param>
         public static void SetTitlebarTheme(this Window window)
         {
-            if (window == null)
-                throw new ArgumentNullException(nameof(window));
+            ArgumentNullException.ThrowIfNull(window);
 
             SetTitlebarTheme(window, Application.Current.RequestedTheme == ApplicationTheme.Light);
         }
@@ -56,8 +54,7 @@ namespace Sungaila.ImmersiveDarkMode.WinUI
         /// <param name="isLightTheme">Determines whether the light or dark theme is applied.</param>
         public static void SetTitlebarTheme(this Window window, bool isLightTheme)
         {
-            if (window == null)
-                throw new ArgumentNullException(nameof(window));
+            ArgumentNullException.ThrowIfNull(window);
 
             NativeMethods.SetTitlebarTheme(WindowNative.GetWindowHandle(window), isLightTheme);
         }

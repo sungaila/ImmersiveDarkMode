@@ -16,8 +16,7 @@ namespace Sungaila.ImmersiveDarkMode.Wpf
         /// <param name="window">The WPF window for which the titlebar theme is set.</param>
         public static void InitTitlebarTheme(this Window window)
         {
-            if (window == null)
-                throw new ArgumentNullException(nameof(window));
+            ArgumentNullException.ThrowIfNull(window);
 
             HwndSource? hwndSource = null;
 
@@ -68,6 +67,7 @@ namespace Sungaila.ImmersiveDarkMode.Wpf
             }
             catch (Exception)
             {
+                // ignore
             }
 
             return IntPtr.Zero;
@@ -79,8 +79,7 @@ namespace Sungaila.ImmersiveDarkMode.Wpf
         /// <param name="window">The WPF window for which the titlebar theme is set.</param>
         public static void SetTitlebarTheme(this Window window)
         {
-            if (window == null)
-                throw new ArgumentNullException(nameof(window));
+            ArgumentNullException.ThrowIfNull(window);
 
             SetTitlebarTheme(window, NativeMethods.GetAppsUseLightTheme());
         }
@@ -92,8 +91,7 @@ namespace Sungaila.ImmersiveDarkMode.Wpf
         /// <param name="isLightTheme">Determines whether the light or dark theme is applied.</param>
         public static void SetTitlebarTheme(this Window window, bool isLightTheme)
         {
-            if (window == null)
-                throw new ArgumentNullException(nameof(window));
+            ArgumentNullException.ThrowIfNull(window);
 
             NativeMethods.SetTitlebarTheme(new WindowInteropHelper(window).Handle, isLightTheme);
         }

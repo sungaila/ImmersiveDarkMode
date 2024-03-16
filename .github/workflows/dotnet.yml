@@ -41,6 +41,10 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@main
+        with:
+          msbuild-architecture: x64
       - name: Setup .NET 6
         uses: actions/setup-dotnet@main
         with:
@@ -54,11 +58,11 @@ jobs:
         with:
           dotnet-version: 8.x
       - name: Restore
-        run: dotnet restore ImmersiveDarkMode.sln
+        run: msbuild ImmersiveDarkMode.sln /t:restore
       - name: Build
-        run: dotnet build ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --property:VersionSuffix=ci --no-restore
+        run: msbuild ImmersiveDarkMode.sln /p:Configuration=${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} /p:VersionSuffix=ci /p:RestorePackages=false
       - name: Pack
-        run: dotnet pack ImmersiveDarkMode.sln --configuration ${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} --property:VersionSuffix=ci --no-restore
+        run: msbuild ImmersiveDarkMode.sln /t:pack /p:Configuration=${{ github.event_name != 'workflow_dispatch' && 'Debug' || inputs.build_configuration }} /p:VersionSuffix=ci /p:RestorePackages=false
       - name: Publish libraries
         uses: actions/upload-artifact@v4
         with:
